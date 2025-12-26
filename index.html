@@ -3,91 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>给最爱的你</title>
-    <!-- 引入浪漫字体 -->
+    <title>给最爱的莹莹</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
     <style>
         /* --- 1. 基础设置 --- */
         body {
             margin: 0;
             padding: 0;
-            /* 柔和的粉色渐变背景 */
             background: linear-gradient(to right, #ffdde1, #ee9ca7);
-            min-height: 100vh; /* 使用 min-height 防止内容溢出裁剪 */
+            height: 100vh; /* 固定高度 */
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden; /* 禁止左右滚动 */
-            overflow-y: hidden; /* 禁止上下滚动 */
+            overflow: hidden; /* 彻底禁止页面整体滚动，防止抽搐 */
             font-family: 'Noto Serif SC', 'Dancing Script', serif;
             position: relative;
         }
 
-        /* --- 2. 背景浮动照片样式 (新功能) --- */
+        /* --- 2. 背景浮动照片样式 (已移除呼吸动画) --- */
         .bg-photo-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* 让鼠标可以透过照片点击背景，不影响操作 */
-            z-index: 1; /* 在背景之上，卡片之下 */
-            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .bg-photo {
             position: absolute;
-            border: 8px solid #fff; /* 拍立得白边 */
-            border-bottom: 20px solid #fff; /* 底部加宽 */
+            border: 8px solid #fff;
+            border-bottom: 20px solid #fff;
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            width: 160px; /* 照片默认大小 */
+            width: 160px;
             height: auto;
             border-radius: 4px;
-            opacity: 0.85; /* 稍微透明一点，融合背景 */
-            animation: slowBreath 6s ease-in-out infinite; /* 缓慢呼吸动画 */
+            opacity: 0.85;
+            /* 删除了 animation: slowBreath... 保持静止 */
             transition: all 0.5s;
         }
 
-        /* 照片的位置分布 (分散在四周) */
-        .p1 { top: 5%; left: 5%; transform: rotate(-15deg); animation-delay: 0s; }
-        .p2 { top: 10%; right: 5%; transform: rotate(10deg); width: 140px; animation-delay: 1.5s; }
-        .p3 { bottom: 15%; left: 8%; transform: rotate(8deg); width: 150px; animation-delay: 3s; }
-        .p4 { bottom: 5%; right: 5%; transform: rotate(-10deg); animation-delay: 2s; }
-        .p5 { top: 45%; left: -2%; transform: rotate(20deg); width: 120px; animation-delay: 4s; } /* 仅大屏显示 */
-        .p6 { top: 50%; right: -2%; transform: rotate(-20deg); width: 130px; animation-delay: 1s; } /* 仅大屏显示 */
-
-        /* 呼吸动画：缓慢放大缩小 */
-        @keyframes slowBreath {
-            0% { transform: scale(1) rotate(var(--r)); }
-            50% { transform: scale(1.1) rotate(var(--r)); box-shadow: 0 15px 30px rgba(255,117,140,0.3); }
-            100% { transform: scale(1) rotate(var(--r)); }
-        }
+        .p1 { top: 5%; left: 5%; transform: rotate(-15deg); }
+        .p2 { top: 10%; right: 5%; transform: rotate(10deg); width: 140px; }
+        .p3 { bottom: 15%; left: 8%; transform: rotate(8deg); width: 150px; }
+        .p4 { bottom: 5%; right: 5%; transform: rotate(-10deg); }
+        .p5 { top: 45%; left: -2%; transform: rotate(20deg); width: 120px; }
+        .p6 { top: 50%; right: -2%; transform: rotate(-20deg); width: 130px; }
 
         /* --- 3. 中间卡片样式 --- */
         .card {
-            background-color: rgba(255, 255, 255, 0.9); /* 不透明度提高，防止背景照片干扰文字 */
+            background-color: rgba(255, 255, 255, 0.95);
             width: 85%;
             max-width: 520px;
-            padding: 40px;
+            /* 限制卡片最大高度，防止撑破屏幕 */
+            max-height: 90vh; 
+            padding: 30px 40px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             text-align: center;
             position: relative;
-            z-index: 10; /* 保证在最上层 */
-            backdrop-filter: blur(10px); /* 毛玻璃效果 */
-            margin: 20px; /* 防止贴边 */
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column; /* 让内容垂直排列 */
         }
 
         /* --- 4. 头像与文字样式 --- */
         .photo-container {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px auto;
+            width: 120px; /* 稍微调小一点，给文字留空间 */
+            height: 120px;
+            margin: 0 auto 10px auto;
             border-radius: 50%;
             padding: 5px;
             background: #fff;
             box-shadow: 0 0 20px rgba(255, 117, 140, 0.4);
             animation: mainHeartbeat 2s infinite;
+            flex-shrink: 0; /* 防止头像被压扁 */
         }
 
         .photo-container img {
@@ -100,26 +92,53 @@
         h1 {
             color: #ff5e62;
             font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin: 10px 0;
+            flex-shrink: 0;
+        }
+
+        /* --- 重点：文字区域滚动条设置 --- */
+        .message {
+            text-align: left;
+            overflow-y: auto; /* 开启垂直滚动 */
+            padding-right: 10px; /* 给滚动条留点位置 */
+            margin-bottom: 10px;
+            /* 限制高度，超出就会出现滚动条 */
+            max-height: 45vh; 
+        }
+
+        /* 美化滚动条 (Chrome/Safari/Edge) */
+        .message::-webkit-scrollbar {
+            width: 6px;
+        }
+        .message::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 10px;
+        }
+        .message::-webkit-scrollbar-thumb {
+            background: #ff9a9e; /* 粉色滑块 */
+            border-radius: 10px;
+        }
+        .message::-webkit-scrollbar-thumb:hover {
+            background: #ff5e62;
         }
 
         p {
             color: #444;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             margin-bottom: 15px;
-            text-align: left;
             text-indent: 2em;
         }
 
         .signature {
             text-align: right;
-            margin-top: 30px;
+            margin-top: 10px;
             color: #ff5e62;
             font-weight: bold;
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            flex-shrink: 0;
         }
 
         /* --- 5. 动画定义 --- */
@@ -129,14 +148,13 @@
             100% { transform: scale(1); }
         }
 
-        /* 飘落爱心样式 */
         .heart {
             position: absolute;
             bottom: -20px;
             color: #fff;
             opacity: 0.6;
             animation: floatUp 5s linear infinite;
-            z-index: 5; /* 爱心在照片之上，卡片之下 */
+            z-index: 5;
         }
 
         @keyframes floatUp {
@@ -146,33 +164,35 @@
 
         /* --- 6. 手机端适配 --- */
         @media (max-width: 768px) {
-            /* 手机上隐藏左右两侧容易遮挡文字的照片，保留四角的 */
             .p5, .p6 { display: none; }
-            
-            /* 手机上照片缩小并增加透明度，防止喧宾夺主 */
             .bg-photo {
                 width: 100px;
                 opacity: 0.4; 
-                z-index: 0; /* 手机上让照片沉到底层 */
+                z-index: 0;
             }
             .card {
-                padding: 25px;
+                padding: 20px;
                 width: 90%;
+                max-height: 85vh; /* 手机上留多点边距 */
             }
+            .message {
+                max-height: 40vh; /* 手机上文字区域高度 */
+            }
+            h1 { font-size: 1.8rem; }
+            .photo-container { width: 100px; height: 100px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. 背景照片墙区域 (请在这里替换图片路径) -->
+    <!-- 1. 背景照片墙区域 -->
     <div class="bg-photo-container">
-        <!-- 为了效果好，建议准备 4-6 张不同的合照 -->
-        <img src="1.jpg" class="bg-photo p1" style="--r: -15deg">
-        <img src="2.jpg" class="bg-photo p2" style="--r: 10deg">
-        <img src="3.jpg" class="bg-photo p3" style="--r: 8deg">
-        <img src="7.jpg" class="bg-photo p4" style="--r: -10deg">
-        <img src="5.jpg" class="bg-photo p5" style="--r: 20deg">
-        <img src="6.jpg" class="bg-photo p6" style="--r: -20deg">
+        <img src="1.jpg" class="bg-photo p1">
+        <img src="2.jpg" class="bg-photo p2">
+        <img src="3.jpg" class="bg-photo p3">
+        <img src="7.jpg" class="bg-photo p4">
+        <img src="5.jpg" class="bg-photo p5">
+        <img src="6.jpg" class="bg-photo p6">
     </div>
 
     <!-- 2. 爱心生成容器 -->
@@ -180,29 +200,29 @@
 
     <!-- 3. 中间信件卡片 -->
     <div class="card">
-        <!-- 中间的主头像 -->
         <div class="photo-container">
             <img src="4.jpg" alt="Main Photo">
         </div>
 
         <h1>To My Love</h1>
 
+        <!-- 这里加入了滚动条区域 -->
         <div class="message">
             <p>亲爱的莹莹：</p>
             <p>又是一个寒冷的冬天，去年我们在长椅上相倚，今年我们在枕边相拥。</p>
             <p>时间过得这么快，现在再见面我就要问“你是大二的吗”。时间又过得很慢，让我从一点一滴里看到了我们发生的改变。在我旁边，你愿意把人人面前小太阳的角色摘掉，愿意和我在没人看到的角落大笑发癫，愿意把重要的事情托付于我；在你旁边，我也偶尔哭哭啼啼，乐意让你看到我的缺点。</p>
             <p>我很喜欢我们沟通的方式。买到不好看花的那次，我问你“那我其他时候靠谱吗”，你哭着回答“靠谱～”，让同样委屈巴巴的我又被你的诚实可爱击中。</p>
-            <p>一年中，我们产生了很多次误解，但也一次次在没那么心平气和的对话中找到解决方法。我们从不吵架的时长能否登上吉尼斯世界纪录呢？<p>
-            <p>你时常期待我再次给你写信。但写下开头，我却发现我们生活中已经充满了我想在信中向你表达的爱。如果说我们在一起一百天时候的那封信包含着我想说却没说出口的爱，那我想这封信是更多更长久的爱的延续，是我们新一年的开始。<p>
-            <p>祝你在新的一年学术成果出众、健身成功斐然。祝我们在新的一年看见更深入的彼此、看见更广阔的世界。<p>
+            <p>一年中，我们产生了很多次误解，但也一次次在没那么心平气和的对话中找到解决方法。我们从不吵架的时长能否登上吉尼斯世界纪录呢？</p>
+            <p>你时常期待我再次给你写信。但写下开头，我却发现我们生活中已经充满了我想在信中向你表达的爱。如果说我们在一起一百天时候的那封信包含着我想说却没说出口的爱，那我想这封信是更多更长久的爱的延续，是我们新一年的开始。</p>
+            <p>祝你在新的一年学术成果出众、健身成功斐然。祝我们在新的一年看见更深入的彼此、看见更广阔的世界。</p>
         </div>
+
         <div class="signature">
             爱你的小皮划艇
         </div>
     </div>
 
     <script>
-        // 爱心特效脚本
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
