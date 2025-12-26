@@ -100,13 +100,14 @@
         /* --- 重点：文字区域滚动条设置 --- */
         .message {
             text-align: left;
-            overflow-y: auto; /* 启用垂直滚动 */
-            padding-right: 10px; /* 给滚动条留些空间 */
+            overflow-y: scroll;  /* 强制显示垂直滚动条 */
+            padding-right: 10px;  /* 给滚动条留点位置 */
             margin-bottom: 10px;
-            max-height: 45vh; /* 限制最大高度 */
+            max-height: 45vh;  /* 限制文字区域的最大高度 */
             scrollbar-width: thin; /* 更细的滚动条 */
-            scrollbar-color: #ff9a9e #f1f1f1; /* 自定义滚动条颜色 */
+        scrollbar-color: #ff9a9e #f1f1f1; /* 自定义滚动条颜色 */
         }
+
 
         /* 美化滚动条 (Chrome/Safari/Edge) */
         .message::-webkit-scrollbar {
