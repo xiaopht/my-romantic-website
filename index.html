@@ -107,6 +107,23 @@
             scrollbar-width: thin; /* 更细的滚动条 */
         scrollbar-color: #ff9a9e #f1f1f1; /* 自定义滚动条颜色 */
         }
+        
+        /* --- 页面整体缩放 --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            height: 100vh; /* 固定高度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 彻底禁止页面整体滚动，防止抽搐 */
+            font-family: 'Noto Serif SC', 'Dancing Script', serif;
+            position: relative;
+            transform: scale(0.67); /* 强制缩放页面内容为原来的67% */
+            transform-origin: top left; /* 设置缩放原点为左上角 */
+        }
+
 
 
         /* 美化滚动条 (Chrome/Safari/Edge) */
