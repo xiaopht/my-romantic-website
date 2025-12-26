@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给最爱的你</title>
+    <!-- 引入浪漫字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. 基础设置 --- */
+        body {
+            margin: 0;
+            padding: 0;
+            /* 柔和的粉色渐变背景 */
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            min-height: 100vh; /* 使用 min-height 防止内容溢出裁剪 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden; /* 禁止左右滚动 */
+            overflow-y: hidden; /* 禁止上下滚动 */
+            font-family: 'Noto Serif SC', 'Dancing Script', serif;
+            position: relative;
+        }
+
+        /* --- 2. 背景浮动照片样式 (新功能) --- */
+        .bg-photo-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* 让鼠标可以透过照片点击背景，不影响操作 */
+            z-index: 1; /* 在背景之上，卡片之下 */
+            overflow: hidden;
+        }
+
+        .bg-photo {
+            position: absolute;
+            border: 8px solid #fff; /* 拍立得白边 */
+            border-bottom: 20px solid #fff; /* 底部加宽 */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            width: 160px; /* 照片默认大小 */
+            height: auto;
+            border-radius: 4px;
+            opacity: 0.85; /* 稍微透明一点，融合背景 */
+            animation: slowBreath 6s ease-in-out infinite; /* 缓慢呼吸动画 */
+            transition: all 0.5s;
+        }
+
+        /* 照片的位置分布 (分散在四周) */
+        .p1 { top: 5%; left: 5%; transform: rotate(-15deg); animation-delay: 0s; }
+        .p2 { top: 10%; right: 5%; transform: rotate(10deg); width: 140px; animation-delay: 1.5s; }
+        .p3 { bottom: 15%; left: 8%; transform: rotate(8deg); width: 150px; animation-delay: 3s; }
+        .p4 { bottom: 5%; right: 5%; transform: rotate(-10deg); animation-delay: 2s; }
+        .p5 { top: 45%; left: -2%; transform: rotate(20deg); width: 120px; animation-delay: 4s; } /* 仅大屏显示 */
+        .p6 { top: 50%; right: -2%; transform: rotate(-20deg); width: 130px; animation-delay: 1s; } /* 仅大屏显示 */
+
+        /* 呼吸动画：缓慢放大缩小 */
+        @keyframes slowBreath {
+            0% { transform: scale(1) rotate(var(--r)); }
+            50% { transform: scale(1.1) rotate(var(--r)); box-shadow: 0 15px 30px rgba(255,117,140,0.3); }
+            100% { transform: scale(1) rotate(var(--r)); }
+        }
+
+        /* --- 3. 中间卡片样式 --- */
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* 不透明度提高，防止背景照片干扰文字 */
+            width: 85%;
+            max-width: 520px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            z-index: 10; /* 保证在最上层 */
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            margin: 20px; /* 防止贴边 */
+        }
+
+        /* --- 4. 头像与文字样式 --- */
+        .photo-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            padding: 5px;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 117, 140, 0.4);
+            animation: mainHeartbeat 2s infinite;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #ff5e62;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #444;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: left;
+            text-indent: 2em;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+            color: #ff5e62;
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+        }
+
+        /* --- 5. 动画定义 --- */
+        @keyframes mainHeartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 117, 140, 0.6); }
+            100% { transform: scale(1); }
+        }
+
+        /* 飘落爱心样式 */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            color: #fff;
+            opacity: 0.6;
+            animation: floatUp 5s linear infinite;
+            z-index: 5; /* 爱心在照片之上，卡片之下 */
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- 6. 手机端适配 --- */
+        @media (max-width: 768px) {
+            /* 手机上隐藏左右两侧容易遮挡文字的照片，保留四角的 */
+            .p5, .p6 { display: none; }
+            
+            /* 手机上照片缩小并增加透明度，防止喧宾夺主 */
+            .bg-photo {
+                width: 100px;
+                opacity: 0.4; 
+                z-index: 0; /* 手机上让照片沉到底层 */
+            }
+            .card {
+                padding: 25px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 背景照片墙区域 (请在这里替换图片路径) -->
+    <div class="bg-photo-container">
+        <!-- 为了效果好，建议准备 4-6 张不同的合照 -->
+        <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=300" class="bg-photo p1" style="--r: -15deg">
+        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=300" class="bg-photo p2" style="--r: 10deg">
+        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=300" class="bg-photo p3" style="--r: 8deg">
+        <img src="https://images.unsplash.com/photo-1621112904887-419379ce6824?q=80&w=300" class="bg-photo p4" style="--r: -10deg">
+        <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=300" class="bg-photo p5" style="--r: 20deg">
+        <img src="https://images.unsplash.com/photo-1544070267-8547372d6a50?q=80&w=300" class="bg-photo p6" style="--r: -20deg">
+    </div>
+
+    <!-- 2. 爱心生成容器 -->
+    <div id="hearts-container"></div>
+
+    <!-- 3. 中间信件卡片 -->
+    <div class="card">
+        <!-- 中间的主头像 -->
+        <div class="photo-container">
+            <img src="https://images.unsplash.com/photo-1518568814500-bf5f8ca66c92?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Main Photo">
+        </div>
+
+        <h1>To My Love</h1>
+
+        <div class="message">
+            <p>亲爱的宝贝：</p>
+            <p>看着背景里我们点点滴滴的回忆，心里充满了暖意。</p>
+            <p>这个网页就像我的心，不仅有为你跳动的节奏，还有满屏关于你的画面。虽然我不能每时每刻在你身边，但这些美好的瞬间会一直陪伴着我们。</p>
+            <p>希望你喜欢这个小惊喜，未来的每一天，我都想和你一起创造更多值得挂在背景里的照片。</p>
+        </div>
+
+        <div class="signature">
+            永远爱你的 [你的名字]
+        </div>
+    </div>
+
+    <script>
+        // 爱心特效脚本
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            const colors = ['#ff9a9e', '#fecfef', '#ffdde1', '#fcb69f'];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
